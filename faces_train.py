@@ -33,15 +33,15 @@ for root, dirs, files in os.walk(image_dir):
             pil_image = Image.open(path).convert("L") # grayscale
 
             image_array = np.array(pil_image, 'uint8')
+            #
+            # x_train.append(image_array)
+            # y_labels.append(id_)
             
-            x_train.append(image_array)
-            y_labels.append(id_)
-            
-            #faces = classifier.detectMultiScale(image_array, 1.1, 5)
+            faces = classifier.detectMultiScale(image_array, 1.3, 3)
 
-            # for (x, y, w, h) in faces:
-            #     x_train.append(image_array[y: y + h, x: x + w])
-            #     y_labels.append(id_)
+            for (x, y, w, h) in faces:
+                x_train.append(image_array[y: y + h, x: x + w])
+                y_labels.append(id_)
 
 
 print(label_dict)

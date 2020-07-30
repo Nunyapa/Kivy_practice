@@ -9,7 +9,8 @@ class FaceRecognizer():
 
     def predict(self, gray_roi_img):
         if len(gray_roi_img) > 0:
+
             id_, conf = self.recognizer.predict(gray_roi_img)
-            if conf >= 45 and conf <= 100:
+            if conf >= 55 and conf <= 100:
                 return id_
         return -1

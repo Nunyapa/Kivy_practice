@@ -1,20 +1,17 @@
-# from kivy.logger import Logger
-# import logging
-# Logger.setLevel(logging.TRACE)
-
 from kivy.app import App
-import kivy
 from kivy.lang import Builder
 from kivy.uix.widget import  Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.camera import Camera
 from kivy.graphics.texture import Texture
+from android.permissions import request_permissions, Permission 
+from FaceDetector import FaceDetection
+from FaceRecognizer import FaceRecognizer
 
 import numpy as np
 import cv2
 import time
-
-from FaceDetection import FaceDetection, FaceRecognizer
+import kivy
 
 
 class MyCamera(Camera):
@@ -50,9 +47,7 @@ class MyCamera(Camera):
         super(MyCamera, self).on_tex(*l)
 
     def process_frame(self, frame):
-        # Process frame with opencv
-        #print("frame")
-        # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        # Process frame
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         if self.detectionFrame == self.DETECTION_TIME:
             self.detectionFrame = 0
@@ -64,37 +59,35 @@ class MyCamera(Camera):
         self.detectionFrame += 1
         return frame.tobytes()
 
-class CameraClick(BoxLayout):
-    def capture(self):
-        '''
-        Function to capture the images and give them the names
-        according to their captured time and date.
-        '''
-        camera = self.ids['camera']
-        # camera.export_to_png("IMG_{}.png".format(timestr))
-        print("Captured")
-
-Builder.load_string('''
-<CameraClick>:
-    size: root.size
-    orientation: 'vertical'
-    MyCamera:
-        id: camera
-        index: 0
-        resolution: (640, 480)
-        size_hint: 1, .7
-        play: True
-    Button:
-        text: 'Capture'
-        size_hint: 1, .3
-        on_press: root.capture()
-''')
+class Container(BoxLayout):
+    pass
 
 
-class TestCamera(App):
+#TODO: make the view from kv file
+
+# Builder.load_string('''
+# <CameraClick>:
+#     size: root.size
+#     orientation: 'vertical'
+#     MyCamera:
+#         id: camera
+#         index: 0
+#         resolution: (640, 480)
+#         size_hint: 1, .7
+#         play: True
+#     Button:
+#         text: 'Capture'
+#         size_hint: 1, .3
+#         on_press: root.capture()
+# ''')
+
+
+class FaceRecognitionCamera(App):
     def build(self):
-        return CameraClick()
+        #TODO: add permission require
+
+        return Container()
 
 
 if __name__ == "__main__":
-    TestCamera().run()
+    FaceRecognitionCamera().run()

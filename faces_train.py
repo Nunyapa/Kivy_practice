@@ -42,6 +42,8 @@ for root, dirs, files in os.walk(image_dir):
             # for (x, y, w, h) in faces:
             #     x_train.append(image_array[y: y + h, x: x + w])
             #     y_labels.append(id_)
+
+
 print(label_dict)
 print(y_labels)
 with open("labels.pickle", 'wb') as f:
